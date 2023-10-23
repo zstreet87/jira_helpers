@@ -18,6 +18,20 @@ def search_jira_key(jira_url, username, password, issue_key):
         print(description.prettify())
         # Add more fields as needed
 
+        comments = issue.fields.comment.comments
+        print("*" * 40)
+        print("COMMENT SECTION")
+        print("-" * 40)
+        for comment in comments:
+            author = comment.author.displayName
+            created = comment.created
+            body = comment.body
+
+            print(f"Author: {author}")
+            print(f"Created: {created}")
+            print(f"Comment: {body}")
+            print("-" * 40)
+
     except Exception as e:
         print(f"Error: {str(e)}")
 
