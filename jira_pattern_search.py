@@ -32,9 +32,14 @@ if __name__ == "__main__":
     parser.add_argument("jira_url", help="The Jira instance URL")
     parser.add_argument("username", help="Your Jira username")
     parser.add_argument("password", help="Your Jira password")
-    parser.add_argument("pattern", help="The pattern to search for in issue titles")
     parser.add_argument(
-        "status",
+        "--pattern",
+        help="The pattern to search for in issue titles. Format 'pattern=Issue', for example",
+        nargs=1,
+    )
+    parser.add_argument(
+        "--status",
+        help="Specify the status as of ticket",
         choices=[
             "Implemented",
             "Analyzed",
@@ -43,10 +48,11 @@ if __name__ == "__main__":
             "Rejected",
             "Opened",
             "Done",
+            # TODO: should also have an "ALL" status that prints all statuses
         ],
-        help="Choose 'Implemented', 'Analyzed', 'Assessed', 'Closed', 'Rejected', 'Opened', 'Done'",
+        nargs=1,
     )
     args = parser.parse_args()
-    search_jira_issues(
-        args.jira_url, args.username, args.password, args.pattern, args.status
-    )
+    pattern = args.pattern[0]
+    status = args.status[0]
+    search_jira_issues(args.jira_url, args.username, args.password, pattern, status)
